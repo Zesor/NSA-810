@@ -40,7 +40,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm run build --if-present
-      working-directory: ./back_student/
+      working-directory: ./front_student/
 
   scan-images:
     needs: back-build
@@ -52,6 +52,19 @@ jobs:
         run: |
           docker build -t container .
         working-directory: ./back_student/
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'container'
+          format: 'table'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH,LOW'
+
+      - name: Build an image from Dockerfile
+        run: |
+          docker build -t container .
+        working-directory: ./front_student/
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
