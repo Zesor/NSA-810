@@ -48,7 +48,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Build an image from Dockerfile
+      - name: Build an image from back Dockerfile
         run: |
           docker build -t container .
         working-directory: ./back_student/
@@ -61,7 +61,7 @@ jobs:
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH,LOW'
 
-      - name: Build an image from Dockerfile
+      - name: Build an image from front Dockerfile
         run: |
           docker build -t container .
         working-directory: ./front_student/
