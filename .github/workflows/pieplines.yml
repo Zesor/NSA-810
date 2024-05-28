@@ -40,9 +40,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm install
-      working-directory: ./front_student/
-    - run: npm run build --if-present
+    - run: yarn install
       working-directory: ./front_student/
 
   scan-images:
